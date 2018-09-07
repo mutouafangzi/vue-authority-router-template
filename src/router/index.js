@@ -4,11 +4,6 @@ import Router from 'vue-router'
 // import Login from '@/views/login'
 // import Errorpage from '@/views/404.vue'
 import layout from '@/views/layout/layout.vue'
-// import indexPage from '@/views/layout/indexpage.vue'
-// import watchPage from '@/views/layout/watch.vue'
-// import editPage from '@/views/layout/edit.vue'
-// import deletePage from '@/views/layout/delete.vue'
-// import addPage from '@/views/layout/add.vue'
 
 Vue.use(Router)
 
@@ -17,6 +12,7 @@ export const constantRouterMap = [
   {
     path: '/login',
     name: 'login',
+    // 当设置 true 的时候该路由不会再侧边栏出现 如401，login等页面，或者如一些编辑页面/edit/1，默认是false
     hidden: true,
     component: (resolve) => require(['../views/login.vue'], resolve)
   },
@@ -27,23 +23,38 @@ export const constantRouterMap = [
     component: (resolve) => require(['../views/404.vue'], resolve)
   },
   {
-    path: '/test',
-    name: 'test',
+    path: '/401',
+    name: '401',
     hidden: true,
     component: (resolve) => require(['../views/test.vue'], resolve)
   },
   {
-    path: '',
-    name: '首页',
-    hidden: true,
+    path: '/documentation',
     component: layout,
-    redirect: '/dashboard',
-    meta: { title: '首页' },
+    redirect: '/documentation/index',
+    children: [{
+      path: 'index',
+      component: () => import('@/views/documentation/index'),
+      name: '文档',
+      meta: {
+        // 设置该路由在侧边栏和面包屑中展示的名字
+        title: 'documentation',
+        // 设置该路由的图标
+        icon: 'documentation'
+        // 如果设置为true ,则不会被 <keep-alive> 缓存(默认 false)
+        // noCache: true
+      }
+    }]
+  },
+  {
+    path: '',
+    component: layout,
+    redirect: 'dashboard',
     children: [
       {
         path: 'dashboard',
         component: (resolve) => require(['../views/dashboard/index.vue'], resolve),
-        name: '首页',
+        // name: '首页',
         meta: { title: '首页' }
       }
     ]
@@ -62,7 +73,8 @@ export const asyncRouterMap = [
     name: 'permission',
     redirect: '/permission/watch',
     component: layout,
-    hidden: false,
+    // 当你一个路由下面的 children 声明的路由大于1个时，自动会变成嵌套的模式--如组件页面;只有一个时，会将那个子路由当做根路由显示在侧边栏--如引导页面;若你想不管路由下面的 children 声明的个数都显示你的根路由,你可以设置 alwaysShow: true，这样它就会忽略之前定义的规则，一直显示根路由
+    alwaysShow: true,
     children: [
       {
         path: 'watch',
