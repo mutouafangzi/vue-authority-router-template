@@ -60,6 +60,9 @@ export default {
   position: relative;
   height: 100%;
   width: 100%;
+  .main-container{
+    height: 100%;
+  }
 }
 /* .drawer-bg {
   background: #000;

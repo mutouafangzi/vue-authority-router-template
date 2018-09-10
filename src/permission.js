@@ -5,7 +5,7 @@ import router from './router'
 const whiteList = ['/login', '/authredirect']// no redirect whitelist
 
 router.beforeEach((to, from, next) => {
-  // console.log('触发了导航守卫', to.matched, to, from, store)
+  console.log('触发了导航守卫', to, from, store)
   if (store.getters.token) { // 判断是否有token
     // console.log('获取到了token')
     // 已经有token，说明登陆成功
