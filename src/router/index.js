@@ -29,15 +29,15 @@ export const constantRouterMap = [
     component: (resolve) => require(['../views/errorPages/401.vue'], resolve)
   },
   {
-    path: '',
+    path: '/',
     component: layout,
     redirect: 'dashboard',
     children: [
       {
-        path: 'dashboard',
+        path: '/dashboard',
         component: (resolve) => require(['../views/dashboard/index.vue'], resolve),
-        // name: '首页',
-        meta: { title: '首页' }
+        name: 'dashboard',
+        meta: { title: 'dashboard' }
       }
     ]
   },
